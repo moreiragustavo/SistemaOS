@@ -13,6 +13,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.swing.DefaultComboBoxModel;
@@ -36,6 +38,9 @@ import model.DAO;
 import utils.Validador;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.Font;
 
 public class clientes extends JDialog {
 
@@ -71,7 +76,8 @@ public class clientes extends JDialog {
 	@SuppressWarnings("rawtypes")
 	private JList listaNome;
 	private JPanel panel;
-	private JPanel panel_1;
+	private JLabel lblNewLabel_10;
+	private JLabel lblData;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -89,13 +95,25 @@ public class clientes extends JDialog {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public clientes() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				setarData();
+			}
+			private void setarData() {
+				Date data = new Date();
+				DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+				lblData.setText(formatador.format(data));
+			}
+		});
 		getContentPane().setBackground(new Color(192, 192, 192));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(clientes.class.getResource("/img/pngegg.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(clientes.class.getResource("/img2/logodaempresa.png")));
 		setTitle("Clientes");
 		setBounds(100, 100, 800, 600);
+		setLocationRelativeTo(null);
 
 		txtID = new JTextField();
-		txtID.setBounds(311, 81, 46, 20);
+		txtID.setBounds(106, 90, 46, 20);
 		txtID.setEnabled(false);
 		txtID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,7 +124,7 @@ public class clientes extends JDialog {
 		scrollPaneNome = new JScrollPane();
 		scrollPaneNome.setVisible(false);
 		scrollPaneNome.setBorder(null);
-		scrollPaneNome.setBounds(217, 128, 240, 65);
+		scrollPaneNome.setBounds(106, 167, 240, 65);
 		getContentPane().add(scrollPaneNome);
 
 		listaNome = new JList();
@@ -129,19 +147,19 @@ public class clientes extends JDialog {
 				ListarCliente();
 			}
 		});
-		txtNome.setBounds(217, 108, 240, 20);
+		txtNome.setBounds(106, 147, 240, 20);
 		getContentPane().add(txtNome);
 		txtNome.setColumns(10);
 		txtNome.setDocument(new Validador(30));
 
 		txtCep = new JTextField();
-		txtCep.setBounds(291, 254, 160, 20);
+		txtCep.setBounds(106, 316, 240, 20);
 		getContentPane().add(txtCep);
 		txtCep.setColumns(10);
 		txtCep.setDocument(new Validador(10));
 
 		txtEndereco = new JTextField();
-		txtEndereco.setBounds(176, 193, 275, 20);
+		txtEndereco.setBounds(106, 263, 240, 20);
 		getContentPane().add(txtEndereco);
 		txtEndereco.setColumns(10);
 
@@ -159,7 +177,7 @@ public class clientes extends JDialog {
 			}
 
 		});
-		txtFone.setBounds(291, 152, 160, 20);
+		txtFone.setBounds(106, 212, 240, 20);
 		getContentPane().add(txtFone);
 		txtFone.setColumns(10);
 		txtFone.setDocument(new Validador(12));
@@ -167,7 +185,7 @@ public class clientes extends JDialog {
 		btnAdd = new JButton("");
 		btnAdd.setBounds(118, 413, 89, 54);
 		btnAdd.setHideActionText(true);
-		btnAdd.setIcon(new ImageIcon(clientes.class.getResource("/img/addblackcircularbutton_104741 (1).png")));
+		btnAdd.setIcon(new ImageIcon(clientes.class.getResource("/img2/addblackcircularbutton_104741 (1).png")));
 		btnAdd.setToolTipText("Adicionar");
 		btnAdd.setContentAreaFilled(false);
 		btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -181,8 +199,7 @@ public class clientes extends JDialog {
 
 		btnEditar = new JButton("");
 		btnEditar.setBounds(280, 413, 89, 54);
-		btnEditar.setIcon(new ImageIcon(
-				clientes.class.getResource("/img/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
+		btnEditar.setIcon(new ImageIcon(clientes.class.getResource("/img2/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
 		btnEditar.setToolTipText("Editar");
 		btnEditar.setContentAreaFilled(false);
 		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -196,7 +213,7 @@ public class clientes extends JDialog {
 
 		btnExcluir = new JButton("");
 		btnExcluir.setBounds(410, 413, 89, 54);
-		btnExcluir.setIcon(new ImageIcon(clientes.class.getResource("/img/crossdeleteblackcircularbutton_79721.png")));
+		btnExcluir.setIcon(new ImageIcon(clientes.class.getResource("/img2/crossdeleteblackcircularbutton_79721.png")));
 		btnExcluir.setBorder(null);
 		btnExcluir.setContentAreaFilled(false);
 		btnExcluir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -209,7 +226,9 @@ public class clientes extends JDialog {
 		getContentPane().add(btnExcluir);
 
 		btnBuscarCep = new JButton("Buscar CEP");
-		btnBuscarCep.setBounds(176, 224, 89, 23);
+		btnBuscarCep.setBorder(null);
+		btnBuscarCep.setBackground(new Color(255, 255, 255));
+		btnBuscarCep.setBounds(440, 315, 89, 23);
 		btnBuscarCep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BuscarCep();
@@ -223,7 +242,7 @@ public class clientes extends JDialog {
 		btnLimpar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLimpar.setBounds(557, 413, 89, 54);
 		btnLimpar.setBorder(null);
-		btnLimpar.setIcon(new ImageIcon(clientes.class.getResource("/img/pngegg (3).png")));
+		btnLimpar.setIcon(new ImageIcon(clientes.class.getResource("/img2/pngegg (3).png")));
 		btnLimpar.setToolTipText("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -233,71 +252,94 @@ public class clientes extends JDialog {
 		getContentPane().add(btnLimpar);
 
 		lblNewLabel = new JLabel("ID");
-		lblNewLabel.setBounds(330, 67, 39, 14);
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBackground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(106, 74, 46, 14);
 		getContentPane().add(lblNewLabel);
 
 		lblNewLabel_1 = new JLabel("Nome");
-		lblNewLabel_1.setBounds(176, 114, 56, 14);
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(106, 130, 56, 14);
 		getContentPane().add(lblNewLabel_1);
 
 		lblNewLabel_2 = new JLabel("Cep");
-		lblNewLabel_2.setBounds(235, 247, 46, 34);
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(106, 294, 46, 20);
 		getContentPane().add(lblNewLabel_2);
 
 		lblNewLabel_3 = new JLabel("Endereço");
-		lblNewLabel_3.setBounds(291, 179, 62, 14);
+		lblNewLabel_3.setForeground(new Color(255, 255, 255));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_3.setBounds(106, 246, 125, 14);
 		getContentPane().add(lblNewLabel_3);
 
 		lblNewLabel_4 = new JLabel("Fone");
-		lblNewLabel_4.setBounds(252, 155, 46, 14);
+		lblNewLabel_4.setForeground(new Color(255, 255, 255));
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(106, 195, 46, 14);
 		getContentPane().add(lblNewLabel_4);
 		getRootPane().setDefaultButton(btnBuscarCep);
 
 		txtBairro = new JTextField();
-		txtBairro.setBounds(291, 285, 160, 20);
+		txtBairro.setBounds(106, 382, 160, 20);
 		getContentPane().add(txtBairro);
 		txtBairro.setColumns(10);
 		txtBairro.setDocument(new Validador(20));
 
 		JLabel lblNewLabel_5 = new JLabel("Bairro");
-		lblNewLabel_5.setBounds(235, 288, 46, 14);
+		lblNewLabel_5.setForeground(new Color(255, 255, 255));
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(106, 365, 73, 14);
 		getContentPane().add(lblNewLabel_5);
 
 		JLabel lblNewLabel_6 = new JLabel("Complemento");
-		lblNewLabel_6.setBounds(217, 319, 89, 14);
+		lblNewLabel_6.setForeground(new Color(255, 255, 255));
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_6.setBounds(440, 74, 152, 14);
 		getContentPane().add(lblNewLabel_6);
 
 		txtComplemento = new JTextField();
-		txtComplemento.setBounds(291, 316, 160, 20);
+		txtComplemento.setBounds(440, 90, 240, 20);
 		getContentPane().add(txtComplemento);
 		txtComplemento.setColumns(10);
 		txtComplemento.setDocument(new Validador(15));
 
 		JLabel lblNewLabel_7 = new JLabel("N°");
-		lblNewLabel_7.setBounds(235, 345, 46, 14);
+		lblNewLabel_7.setForeground(new Color(255, 255, 255));
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_7.setBounds(440, 246, 46, 14);
 		getContentPane().add(lblNewLabel_7);
 
 		txtNumero = new JTextField();
-		txtNumero.setBounds(291, 342, 46, 20);
+		txtNumero.setBounds(440, 263, 46, 20);
 		getContentPane().add(txtNumero);
 		txtNumero.setColumns(10);
 		txtNumero.setDocument(new Validador(13));
 
 		txtCidade = new JTextField();
-		txtCidade.setBounds(291, 373, 160, 20);
+		txtCidade.setBounds(440, 148, 240, 20);
 		getContentPane().add(txtCidade);
 		txtCidade.setColumns(10);
 
 		JLabel lblNewLabel_8 = new JLabel("Cidade");
-		lblNewLabel_8.setBounds(235, 379, 46, 14);
+		lblNewLabel_8.setForeground(new Color(255, 255, 255));
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_8.setBounds(440, 130, 129, 14);
 		getContentPane().add(lblNewLabel_8);
 
 		lblNewLabel_9 = new JLabel("UF");
-		lblNewLabel_9.setBounds(346, 228, 46, 14);
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_9.setForeground(new Color(255, 255, 255));
+		lblNewLabel_9.setBounds(440, 195, 46, 14);
 		getContentPane().add(lblNewLabel_9);
 
 		cboUf = new JComboBox();
-		cboUf.setBounds(370, 224, 46, 22);
+		cboUf.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		cboUf.setForeground(new Color(255, 255, 255));
+		cboUf.setBounds(440, 211, 46, 22);
 		cboUf.setModel(new DefaultComboBoxModel(
 				new String[] { "", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
 						"PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
@@ -305,13 +347,19 @@ public class clientes extends JDialog {
 
 		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 504, 784, 57);
+		panel.setBounds(0, 527, 784, 34);
 		getContentPane().add(panel);
-
-		panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(0, 0, 784, 57);
-		getContentPane().add(panel_1);
+		panel.setLayout(null);
+		
+		lblData = new JLabel("");
+		lblData.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblData.setBounds(262, 0, 397, 34);
+		panel.add(lblData);
+		
+		lblNewLabel_10 = new JLabel("New label");
+		lblNewLabel_10.setIcon(new ImageIcon(clientes.class.getResource("/img2/inicio2.png")));
+		lblNewLabel_10.setBounds(0, 0, 784, 561);
+		getContentPane().add(lblNewLabel_10);
 
 	}
 
@@ -569,5 +617,4 @@ public class clientes extends JDialog {
 			System.out.println(e);
 		}
 	}
-
 }

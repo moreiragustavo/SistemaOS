@@ -13,6 +13,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.swing.DefaultComboBoxModel;
@@ -37,6 +39,9 @@ import utils.Validador;
 import java.awt.Font;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.border.BevelBorder;
 
 public class fornecedores extends JDialog {
 
@@ -80,6 +85,9 @@ public class fornecedores extends JDialog {
 	private JLabel lblNewLabel_11;
 	private JLabel lblNewLabel_2;
 	private JPanel panel;
+	private JLabel lblNewLabel_15;
+	private JLabel lblData;
+	private JButton btnbuscarCep;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -97,15 +105,28 @@ public class fornecedores extends JDialog {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public fornecedores() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(fornecedores.class.getResource("/img/pngegg.png")));
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				setarData();
+			}
+			private void setarData() {
+				Date data = new Date();
+				DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+				lblData.setText(formatador.format(data));
+			}
+			
+		});
+		setIconImage(Toolkit.getDefaultToolkit().getImage(fornecedores.class.getResource("/img2/testelogoempresa.png")));
 		getContentPane().setBackground(new Color(192, 192, 192));
 		setTitle("Fornecedores");
 		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
 
 		scrollPane00 = new JScrollPane();
 		scrollPane00.setVisible(false);
-		scrollPane00.setBounds(78, 90, 214, 33);
+		scrollPane00.setBounds(106, 153, 214, 33);
 		getContentPane().add(scrollPane00);
 
 		listarUsuarios = new JList();
@@ -119,13 +140,14 @@ public class fornecedores extends JDialog {
 		scrollPane00.setViewportView(listarUsuarios);
 
 		JLabel lblNewLabel = new JLabel("ID");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-		lblNewLabel.setBounds(18, 32, 26, 14);
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel.setBounds(106, 74, 26, 14);
 		getContentPane().add(lblNewLabel);
 
 		txtID = new JTextField();
 		txtID.setEditable(false);
-		txtID.setBounds(54, 29, 53, 20);
+		txtID.setBounds(106, 91, 53, 20);
 		getContentPane().add(txtID);
 		txtID.setColumns(10);
 
@@ -136,7 +158,7 @@ public class fornecedores extends JDialog {
 				listarUsuario();
 			}
 		});
-		txtRazao.setBounds(78, 72, 214, 20);
+		txtRazao.setBounds(106, 135, 214, 20);
 		getContentPane().add(txtRazao);
 		txtRazao.setColumns(10);
 		txtRazao.setDocument(new Validador(40));
@@ -152,7 +174,7 @@ public class fornecedores extends JDialog {
 
 			}
 		});
-		txtFone.setBounds(348, 103, 144, 20);
+		txtFone.setBounds(430, 91, 214, 20);
 		getContentPane().add(txtFone);
 		txtFone.setColumns(10);
 		txtFone.setDocument(new Validador(15));
@@ -168,33 +190,37 @@ public class fornecedores extends JDialog {
 
 			}
 		});
-		txtCNPJ.setBounds(89, 233, 144, 20);
+		txtCNPJ.setBounds(106, 233, 214, 20);
 		getContentPane().add(txtCNPJ);
 		txtCNPJ.setColumns(10);
 		txtCNPJ.setDocument(new Validador(15));
 
 		lblNewLabel_1 = new JLabel("Razão Social");
-		lblNewLabel_1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_1.setBounds(10, 74, 104, 14);
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_1.setBounds(106, 119, 104, 14);
 		getContentPane().add(lblNewLabel_1);
 
 		lblNewLabel_2 = new JLabel("Fone");
-		lblNewLabel_2.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_2.setBounds(303, 105, 46, 14);
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(430, 76, 46, 14);
 		getContentPane().add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("CNPJ");
-		lblNewLabel_3.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_3.setBounds(20, 235, 36, 14);
+		lblNewLabel_3.setForeground(Color.WHITE);
+		lblNewLabel_3.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_3.setBounds(106, 216, 76, 14);
 		getContentPane().add(lblNewLabel_3);
 
 		JLabel lblNewLabel_4 = new JLabel("Endereço");
-		lblNewLabel_4.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_4.setBounds(10, 269, 61, 14);
+		lblNewLabel_4.setForeground(Color.WHITE);
+		lblNewLabel_4.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(430, 216, 86, 14);
 		getContentPane().add(lblNewLabel_4);
 
 		txtEndereco = new JTextField();
-		txtEndereco.setBounds(89, 267, 214, 20);
+		txtEndereco.setBounds(430, 233, 214, 20);
 		getContentPane().add(txtEndereco);
 		txtEndereco.setColumns(10);
 
@@ -209,76 +235,84 @@ public class fornecedores extends JDialog {
 
 			}
 		});
-		txtCEP.setBounds(363, 267, 144, 20);
+		txtCEP.setBounds(430, 185, 214, 20);
 		getContentPane().add(txtCEP);
 		txtCEP.setColumns(10);
 		txtCEP.setDocument(new Validador(8));
 
 		JLabel lblNewLabel_5 = new JLabel("CEP");
-		lblNewLabel_5.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_5.setBounds(313, 269, 36, 14);
+		lblNewLabel_5.setForeground(Color.WHITE);
+		lblNewLabel_5.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(430, 172, 79, 14);
 		getContentPane().add(lblNewLabel_5);
 
 		JLabel lblNewLabel_6 = new JLabel("Número");
-		lblNewLabel_6.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_6.setBounds(175, 311, 46, 14);
+		lblNewLabel_6.setForeground(Color.WHITE);
+		lblNewLabel_6.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_6.setBounds(558, 311, 118, 14);
 		getContentPane().add(lblNewLabel_6);
 
 		txtNumero = new JTextField();
 		txtNumero.addKeyListener(new KeyAdapter() {
 
 		});
-		txtNumero.setBounds(239, 309, 86, 20);
+		txtNumero.setBounds(558, 336, 118, 20);
 		getContentPane().add(txtNumero);
 		txtNumero.setColumns(10);
 		txtNumero.setDocument(new Validador(7));
 
 		JLabel lblNewLabel_7 = new JLabel("Cidade");
-		lblNewLabel_7.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_7.setBounds(346, 311, 46, 14);
+		lblNewLabel_7.setForeground(Color.WHITE);
+		lblNewLabel_7.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_7.setBounds(430, 264, 76, 14);
 		getContentPane().add(lblNewLabel_7);
 
 		txtCidade = new JTextField();
-		txtCidade.setBounds(402, 309, 105, 20);
+		txtCidade.setBounds(430, 280, 118, 20);
 		getContentPane().add(txtCidade);
 		txtCidade.setColumns(10);
 		txtCidade.setDocument(new Validador(30));
 
 		txtComplemento = new JTextField();
-		txtComplemento.setBounds(91, 352, 109, 20);
+		txtComplemento.setBounds(430, 336, 118, 20);
 		getContentPane().add(txtComplemento);
 		txtComplemento.setColumns(10);
 		txtComplemento.setDocument(new Validador(25));
 
 		JLabel lblNewLabel_8 = new JLabel("Complemento");
-		lblNewLabel_8.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_8.setBounds(5, 354, 76, 14);
+		lblNewLabel_8.setForeground(Color.WHITE);
+		lblNewLabel_8.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_8.setBounds(430, 311, 144, 14);
 		getContentPane().add(lblNewLabel_8);
 
 		cboUF_1 = new JComboBox();
+		cboUF_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		cboUF_1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
 		cboUF_1.setModel(new DefaultComboBoxModel(
 				new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB",
 						"PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
-		cboUF_1.setBounds(239, 350, 54, 22);
+		cboUF_1.setBounds(589, 370, 54, 24);
 		getContentPane().add(cboUF_1);
 
-		JButton btnbuscarCep = new JButton("BuscarCEP");
+		btnbuscarCep = new JButton("BuscarCEP");
+		btnbuscarCep.setBackground(Color.WHITE);
+		btnbuscarCep.setBorder(null);
 		btnbuscarCep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buscarCep();
 			}
 		});
-		btnbuscarCep.setBounds(376, 233, 116, 23);
+		btnbuscarCep.setBounds(430, 371, 118, 23);
 		getContentPane().add(btnbuscarCep);
 
 		JLabel lblNewLabel_9 = new JLabel("Bairro");
-		lblNewLabel_9.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_9.setBounds(10, 311, 46, 14);
+		lblNewLabel_9.setForeground(Color.WHITE);
+		lblNewLabel_9.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_9.setBounds(558, 264, 86, 14);
 		getContentPane().add(lblNewLabel_9);
 
 		txtBairro = new JTextField();
-		txtBairro.setBounds(60, 309, 105, 20);
+		txtBairro.setBounds(558, 280, 118, 20);
 		getContentPane().add(txtBairro);
 		txtBairro.setColumns(10);
 		txtBairro.setDocument(new Validador(40));
@@ -293,8 +327,8 @@ public class fornecedores extends JDialog {
 		btnLimpar.setContentAreaFilled(false);
 		btnLimpar.setBorder(null);
 		btnLimpar.setToolTipText("Limpar Campos");
-		btnLimpar.setIcon(new ImageIcon(fornecedores.class.getResource("/img/pngegg (3).png")));
-		btnLimpar.setBounds(161, 383, 80, 60);
+		btnLimpar.setIcon(new ImageIcon(fornecedores.class.getResource("/img2/pngegg (3).png")));
+		btnLimpar.setBounds(472, 433, 80, 60);
 		getContentPane().add(btnLimpar);
 
 		btnEditar = new JButton("");
@@ -307,9 +341,8 @@ public class fornecedores extends JDialog {
 		btnEditar.setContentAreaFilled(false);
 		btnEditar.setBorder(null);
 		btnEditar.setToolTipText("Editar Fornecedor");
-		btnEditar.setIcon(new ImageIcon(
-				fornecedores.class.getResource("/img/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
-		btnEditar.setBounds(251, 383, 80, 60);
+		btnEditar.setIcon(new ImageIcon(fornecedores.class.getResource("/img2/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
+		btnEditar.setBounds(292, 433, 80, 60);
 		getContentPane().add(btnEditar);
 
 		btnAdicionar = new JButton("");
@@ -323,8 +356,8 @@ public class fornecedores extends JDialog {
 		btnAdicionar.setBorder(null);
 		btnAdicionar.setToolTipText("Adicionar Fornecedor");
 		btnAdicionar
-				.setIcon(new ImageIcon(fornecedores.class.getResource("/img/addblackcircularbutton_104741 (1).png")));
-		btnAdicionar.setBounds(348, 383, 80, 60);
+				.setIcon(new ImageIcon(fornecedores.class.getResource("/img2/addblackcircularbutton_104741 (1).png")));
+		btnAdicionar.setBounds(202, 433, 80, 60);
 		getContentPane().add(btnAdicionar);
 
 		btnExcluir = new JButton("");
@@ -338,63 +371,80 @@ public class fornecedores extends JDialog {
 		btnExcluir.setContentAreaFilled(false);
 		btnExcluir.setBorder(null);
 		btnExcluir.setIcon(
-				new ImageIcon(fornecedores.class.getResource("/img/crossdeleteblackcircularbutton_79721.png")));
-		btnExcluir.setBounds(427, 383, 80, 60);
+				new ImageIcon(fornecedores.class.getResource("/img2/crossdeleteblackcircularbutton_79721.png")));
+		btnExcluir.setBounds(382, 433, 80, 60);
 		getContentPane().add(btnExcluir);
 
 		txtFantasia = new JTextField();
-		txtFantasia.setBounds(66, 138, 202, 20);
+		txtFantasia.setBounds(106, 280, 214, 20);
 		getContentPane().add(txtFantasia);
 		txtFantasia.setColumns(10);
 
 		lblNewLabel_10 = new JLabel("Fantasia");
-		lblNewLabel_10.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_10.setBounds(10, 140, 46, 14);
+		lblNewLabel_10.setForeground(Color.WHITE);
+		lblNewLabel_10.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_10.setBounds(106, 264, 134, 14);
 		getContentPane().add(lblNewLabel_10);
 
 		lblNewLabel_11 = new JLabel("Vendedor");
-		lblNewLabel_11.setBounds(292, 141, 57, 14);
+		lblNewLabel_11.setForeground(Color.WHITE);
+		lblNewLabel_11.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_11.setBounds(430, 119, 100, 14);
 		getContentPane().add(lblNewLabel_11);
 
 		txtVendedor = new JTextField();
-		txtVendedor.setBounds(358, 138, 123, 20);
+		txtVendedor.setBounds(430, 135, 214, 20);
 		getContentPane().add(txtVendedor);
 		txtVendedor.setColumns(10);
 
 		lblNewLabel_12 = new JLabel("IE (Inscrição Estadual)");
-		lblNewLabel_12.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_12.setBounds(16, 169, 128, 14);
+		lblNewLabel_12.setForeground(Color.WHITE);
+		lblNewLabel_12.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_12.setBounds(106, 354, 176, 14);
 		getContentPane().add(lblNewLabel_12);
 
 		txtIE = new JTextField();
-		txtIE.setBounds(154, 167, 149, 20);
+		txtIE.setBounds(106, 372, 214, 20);
 		getContentPane().add(txtIE);
 		txtIE.setColumns(10);
 		txtIE.setDocument(new Validador(15));
 
 		lblNewLabel_13 = new JLabel("E-mail");
-		lblNewLabel_13.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_13.setBounds(20, 200, 46, 14);
+		lblNewLabel_13.setForeground(Color.WHITE);
+		lblNewLabel_13.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_13.setBounds(106, 311, 76, 14);
 		getContentPane().add(lblNewLabel_13);
 
 		txtEmail = new JTextField();
-		txtEmail.setBounds(64, 198, 168, 20);
+		txtEmail.setBounds(106, 323, 214, 20);
 		getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
 
 		lblNewLabel_14 = new JLabel("Site");
-		lblNewLabel_14.setFont(new Font("Segoe UI Semibold", Font.BOLD, 11));
-		lblNewLabel_14.setBounds(257, 200, 46, 14);
+		lblNewLabel_14.setForeground(Color.WHITE);
+		lblNewLabel_14.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_14.setBounds(106, 172, 63, 14);
 		getContentPane().add(lblNewLabel_14);
 
 		txtSite = new JTextField();
-		txtSite.setBounds(288, 198, 165, 20);
+		txtSite.setBounds(106, 185, 214, 20);
 		getContentPane().add(txtSite);
 		txtSite.setColumns(10);
 		
 		panel = new JPanel();
-		panel.setBounds(0, 489, 784, 72);
+		panel.setBounds(0, 527, 784, 34);
 		getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		lblData = new JLabel("");
+		lblData.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblData.setBounds(262, 0, 397, 34);
+		panel.add(lblData);
+		
+		lblNewLabel_15 = new JLabel("New label");
+		lblNewLabel_15.setIcon(new ImageIcon(fornecedores.class.getResource("/img2/inicio2.png")));
+		lblNewLabel_15.setBounds(-2, 0, 786, 561);
+		getContentPane().add(lblNewLabel_15);
 
 	}
 

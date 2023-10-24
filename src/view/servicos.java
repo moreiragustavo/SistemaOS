@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -42,6 +44,8 @@ import java.io.FileOutputStream;
 import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class servicos extends JDialog {
 
@@ -70,8 +74,12 @@ public class servicos extends JDialog {
 	private JLabel lblValor;
 	private JLabel lblProblema;
 	private JLabel lblVeculo;
-	private JLabel lblData;
+	private JLabel lblDia;
 	private JLabel lblOs;
+	private JLabel lblNewLabel;
+	private JPanel panel_1;
+	private JLabel lblData;
+	private JPanel panel;
 
 	public static void main(String[] args) {
 		try {
@@ -85,13 +93,26 @@ public class servicos extends JDialog {
 
 	@SuppressWarnings("rawtypes")
 	public servicos() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(servicos.class.getResource("/img/pngegg.png")));
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				setarData();
+			}
+			private void setarData() {
+				Date data = new Date();
+				DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+				lblData.setText(formatador.format(data));
+			}
+			
+		});
+		setIconImage(Toolkit.getDefaultToolkit().getImage(servicos.class.getResource("/img2/logo copiar.png")));
 		setTitle("Ordem de Serviço");
 		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		setLocationRelativeTo(null);
 
 		btnAdd = new JButton("");
 		btnAdd.setBorder(null);
@@ -135,24 +156,24 @@ public class servicos extends JDialog {
 
 		txtOS = new JTextField();
 		txtOS.setEditable(false);
-		txtOS.setBounds(191, 135, 46, 20);
+		txtOS.setBounds(100, 108, 63, 20);
 		contentPanel.add(txtOS);
 		txtOS.setColumns(10);
 
 		txtData = new JTextField();
 		txtData.setEditable(false);
-		txtData.setBounds(124, 185, 165, 20);
+		txtData.setBounds(100, 159, 199, 20);
 		contentPanel.add(txtData);
 		txtData.setColumns(10);
 
 		txtVeiculo = new JTextField();
-		txtVeiculo.setBounds(108, 237, 199, 20);
+		txtVeiculo.setBounds(100, 213, 199, 20);
 		contentPanel.add(txtVeiculo);
 		txtVeiculo.setColumns(10);
 		txtVeiculo.setDocument(new Validador(30));
 
 		txtProblema = new JTextField();
-		txtProblema.setBounds(108, 284, 199, 20);
+		txtProblema.setBounds(100, 267, 199, 23);
 		contentPanel.add(txtProblema);
 		txtProblema.setColumns(10);
 
@@ -169,14 +190,14 @@ public class servicos extends JDialog {
 				}
 			}
 		});
-		txtValor.setBounds(146, 334, 126, 20);
+		txtValor.setBounds(100, 322, 199, 20);
 		contentPanel.add(txtValor);
 		txtValor.setColumns(10);
 		txtValor.setDocument(new Validador(10));
 
 		btnBuscar = new JButton("");
 		btnBuscar.setBorder(null);
-		btnBuscar.setIcon(new ImageIcon(servicos.class.getResource("/img/pngwing.com (4).png")));
+		btnBuscar.setIcon(new ImageIcon(servicos.class.getResource("/img2/pngwing.com (4).png")));
 		btnBuscar.setContentAreaFilled(false);
 		btnBuscar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnBuscar.addActionListener(new ActionListener() {
@@ -184,7 +205,7 @@ public class servicos extends JDialog {
 				buscar();
 			}
 		});
-		btnBuscar.setBounds(299, 121, 89, 45);
+		btnBuscar.setBounds(210, 95, 89, 45);
 		contentPanel.add(btnBuscar);
 
 		btnLimpar = new JButton("");
@@ -200,9 +221,9 @@ public class servicos extends JDialog {
 		btnLimpar.setBounds(535, 393, 89, 63);
 		contentPanel.add(btnLimpar);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Cliente", TitledBorder.LEFT, TitledBorder.TOP, null, null));
-		panel.setBounds(467, 219, 270, 119);
+		panel.setBounds(411, 137, 270, 119);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 
@@ -225,12 +246,14 @@ public class servicos extends JDialog {
 
 		txtID = new JTextField();
 		txtID.setEditable(false);
-		txtID.setBounds(47, 91, 86, 20);
+		txtID.setBounds(34, 93, 86, 20);
 		panel.add(txtID);
 		txtID.setColumns(10);
 
 		JLabel lblNewLabel_4 = new JLabel("ID");
-		lblNewLabel_4.setBounds(10, 94, 46, 14);
+		lblNewLabel_4.setForeground(Color.BLACK);
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(10, 94, 46, 19);
 		panel.add(lblNewLabel_4);
 
 		scrollPane = new JScrollPane();
@@ -261,39 +284,50 @@ public class servicos extends JDialog {
 		contentPanel.add(btnOS);
 
 		lblValor = new JLabel("Valor");
-		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblValor.setBounds(177, 301, 89, 43);
+		lblValor.setForeground(Color.WHITE);
+		lblValor.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblValor.setBounds(100, 300, 89, 23);
 		contentPanel.add(lblValor);
 
 		lblProblema = new JLabel("Problema");
-		lblProblema.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblProblema.setBounds(177, 247, 89, 43);
+		lblProblema.setForeground(new Color(255, 255, 255));
+		lblProblema.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblProblema.setBounds(100, 244, 112, 23);
 		contentPanel.add(lblProblema);
 
 		lblVeculo = new JLabel("Veículo");
-		lblVeculo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVeculo.setBounds(177, 201, 89, 43);
+		lblVeculo.setForeground(new Color(255, 255, 255));
+		lblVeculo.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblVeculo.setBounds(100, 190, 89, 23);
 		contentPanel.add(lblVeculo);
 
-		lblData = new JLabel("Data");
-		lblData.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblData.setBounds(191, 150, 75, 43);
-		contentPanel.add(lblData);
+		lblDia = new JLabel("Data");
+		lblDia.setForeground(new Color(255, 255, 255));
+		lblDia.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblDia.setBounds(100, 137, 75, 20);
+		contentPanel.add(lblDia);
 
 		lblOs = new JLabel("OS");
-		lblOs.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblOs.setBounds(201, 97, 65, 43);
+		lblOs.setForeground(new Color(255, 255, 255));
+		lblOs.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblOs.setBounds(100, 74, 69, 43);
 		contentPanel.add(lblOs);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(0, 0, 784, 63);
+		panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(0, 527, 784, 34);
 		contentPanel.add(panel_1);
-
-		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBackground(Color.WHITE);
-		panel_1_1.setBounds(0, 498, 784, 63);
-		contentPanel.add(panel_1_1);
+		panel_1.setLayout(null);
+		
+		lblData = new JLabel("");
+		lblData.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblData.setBounds(262, 0, 397, 34);
+		panel_1.add(lblData);
+		
+		lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(servicos.class.getResource("/img2/inicio2.png")));
+		lblNewLabel.setBounds(0, -8, 784, 561);
+		contentPanel.add(lblNewLabel);
 	}
 
 	@SuppressWarnings("unchecked")

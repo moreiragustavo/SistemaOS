@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -34,6 +36,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 @SuppressWarnings("unused")
 public class usuarioos extends JDialog {
@@ -62,6 +66,9 @@ public class usuarioos extends JDialog {
 	private JComboBox Combo;
 	private JCheckBox chckSenha;
 	private JLabel lblPerfil;
+	private JLabel lblNewLabel;
+	private JPanel panel;
+	private JLabel lblData;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -79,6 +86,19 @@ public class usuarioos extends JDialog {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public usuarioos() {
+		setResizable(false);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				setarData();
+			}
+			private void setarData() {
+				Date data = new Date();
+				DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+				lblData.setText(formatador.format(data));
+			}
+			
+		});
 		setBackground(new Color(0, 128, 255));
 		getContentPane().setBackground(new Color(192, 192, 192));
 		getContentPane().addMouseListener(new MouseAdapter() {
@@ -89,15 +109,16 @@ public class usuarioos extends JDialog {
 			}
 		});
 		setTitle("Usuários");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(usuarioos.class.getResource("/img/pngegg.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(usuarioos.class.getResource("/img2/logo copiar.png")));
 		setBounds(100, 100, 800, 600);
 
 		scrollPaneUsuarios = new JScrollPane();
-		scrollPaneUsuarios.setBounds(272, 254, 212, 80);
+		scrollPaneUsuarios.setBounds(272, 258, 212, 80);
 		scrollPaneUsuarios.setVisible(false);
 		getContentPane().setLayout(null);
 		scrollPaneUsuarios.setBorder(null);
 		getContentPane().add(scrollPaneUsuarios);
+		setLocationRelativeTo(null);
 
 		listaUsuario = new JList();
 		scrollPaneUsuarios.setViewportView(listaUsuario);
@@ -109,23 +130,27 @@ public class usuarioos extends JDialog {
 		});
 
 		JLabel txtnome = new JLabel("Nome");
-		txtnome.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtnome.setForeground(new Color(255, 255, 255));
+		txtnome.setFont(new Font("Dubai Medium", Font.BOLD, 20));
 		txtnome.setBounds(350, 208, 73, 20);
 		getContentPane().add(txtnome);
 
 		JLabel txtsenha = new JLabel("Senha");
-		txtsenha.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtsenha.setBounds(350, 282, 80, 14);
+		txtsenha.setForeground(new Color(255, 255, 255));
+		txtsenha.setFont(new Font("Dubai Medium", Font.BOLD, 20));
+		txtsenha.setBounds(350, 274, 73, 22);
 		getContentPane().add(txtsenha);
 
 		textID = new JTextField();
+		textID.setBackground(new Color(255, 255, 255));
+		textID.setBorder(null);
 		textID.setBounds(350, 108, 51, 20);
 		textID.setEditable(false);
 		getContentPane().add(textID);
 		textID.setColumns(10);
 
 		textNome = new JTextField();
-		textNome.setBounds(272, 227, 212, 33);
+		textNome.setBounds(272, 230, 212, 33);
 		textNome.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textNome.addKeyListener(new KeyAdapter() {
 			@Override
@@ -145,6 +170,7 @@ public class usuarioos extends JDialog {
 		textNome.setDocument(new Validador(20));
 
 		textLogin = new JTextField();
+		textLogin.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textLogin.setBounds(272, 164, 212, 33);
 		getContentPane().add(textLogin);
 		textLogin.setColumns(10);
@@ -176,7 +202,7 @@ public class usuarioos extends JDialog {
 		btnPesquisar.setBorder(null);
 		btnPesquisar.setContentAreaFilled(false);
 		btnPesquisar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnPesquisar.setIcon(new ImageIcon(usuarioos.class.getResource("/img/pngwing.com (4).png")));
+		btnPesquisar.setIcon(new ImageIcon(usuarioos.class.getResource("/img2/pngwing.com (4).png")));
 		getContentPane().add(btnPesquisar);
 
 		btnLimparCampos = new JButton("");
@@ -186,13 +212,14 @@ public class usuarioos extends JDialog {
 				LimparCampos();
 			}
 		});
-		btnLimparCampos.setIcon(new ImageIcon(usuarioos.class.getResource("/img/pngegg (3).png")));
+		btnLimparCampos.setIcon(new ImageIcon(usuarioos.class.getResource("/img2/pngegg (3).png")));
 		btnLimparCampos.setToolTipText("LimparCampos");
 		btnLimparCampos.setContentAreaFilled(false);
 		btnLimparCampos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		getContentPane().add(btnLimparCampos);
 
 		textSenha = new JPasswordField();
+		textSenha.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		textSenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textSenha.setText(null);
@@ -200,7 +227,7 @@ public class usuarioos extends JDialog {
 				textSenha.setBackground(Color.YELLOW);
 			}
 		});
-		textSenha.setBounds(272, 307, 212, 38);
+		textSenha.setBounds(272, 297, 212, 33);
 		getContentPane().add(textSenha);
 		getRootPane().setDefaultButton(btnPesquisar);
 
@@ -216,7 +243,7 @@ public class usuarioos extends JDialog {
 		btnAdicionar.setContentAreaFilled(false);
 		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdicionar.setToolTipText("Adicionar");
-		btnAdicionar.setIcon(new ImageIcon(usuarioos.class.getResource("/img/addblackcircularbutton_104741 (1).png")));
+		btnAdicionar.setIcon(new ImageIcon(usuarioos.class.getResource("/img2/addblackcircularbutton_104741 (1).png")));
 		getContentPane().add(btnAdicionar);
 
 		btnEditar = new JButton("");
@@ -234,8 +261,7 @@ public class usuarioos extends JDialog {
 		btnEditar.setBorder(null);
 		btnEditar.setContentAreaFilled(false);
 		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEditar.setIcon(new ImageIcon(
-				usuarioos.class.getResource("/img/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
+		btnEditar.setIcon(new ImageIcon(usuarioos.class.getResource("/img2/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
 		btnEditar.setToolTipText("Editar");
 		getContentPane().add(btnEditar);
 
@@ -247,7 +273,7 @@ public class usuarioos extends JDialog {
 				excluirContato();
 			}
 		});
-		btnExcluir.setIcon(new ImageIcon(usuarioos.class.getResource("/img/crossdeleteblackcircularbutton_79721.png")));
+		btnExcluir.setIcon(new ImageIcon(usuarioos.class.getResource("/img2/crossdeleteblackcircularbutton_79721.png")));
 		btnExcluir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnExcluir.setContentAreaFilled(false);
 		btnExcluir.setBorder(null);
@@ -266,6 +292,7 @@ public class usuarioos extends JDialog {
 		listaUsuarios.setBorder(null);
 
 		Combo = new JComboBox();
+		Combo.setBackground(new Color(255, 255, 255));
 		Combo.setModel(new DefaultComboBoxModel(new String[] { "", "admin", "usuario" }));
 		Combo.setBounds(537, 258, 80, 38);
 		getContentPane().add(Combo);
@@ -288,19 +315,38 @@ public class usuarioos extends JDialog {
 		getContentPane().add(chckSenha);
 
 		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLogin.setForeground(new Color(255, 255, 255));
+		lblLogin.setFont(new Font("Dubai Medium", Font.BOLD, 20));
 		lblLogin.setBounds(350, 139, 73, 22);
 		getContentPane().add(lblLogin);
 
 		JLabel lblId = new JLabel("ID");
-		lblId.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblId.setBounds(366, 83, 57, 22);
+		lblId.setForeground(new Color(255, 255, 255));
+		lblId.setFont(new Font("Dubai Medium", Font.BOLD, 20));
+		lblId.setBounds(364, 83, 59, 22);
 		getContentPane().add(lblId);
 
 		lblPerfil = new JLabel("Perfil");
-		lblPerfil.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblPerfil.setForeground(new Color(255, 255, 255));
+		lblPerfil.setFont(new Font("Dubai Medium", Font.BOLD, 20));
 		lblPerfil.setBounds(548, 228, 69, 32);
 		getContentPane().add(lblPerfil);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setBounds(0, 527, 784, 34);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		lblData = new JLabel("");
+		lblData.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblData.setBounds(262, 0, 397, 34);
+		panel.add(lblData);
+		
+		lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(usuarioos.class.getResource("/img2/inicio2.png")));
+		lblNewLabel.setBounds(0, -27, 784, 579);
+		getContentPane().add(lblNewLabel);
 	}
 
 	@SuppressWarnings("unchecked")

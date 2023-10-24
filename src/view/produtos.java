@@ -19,6 +19,7 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -50,6 +51,9 @@ import model.DAO;
 import utils.Validador;
 import java.awt.ScrollPane;
 import java.awt.List;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.Font;
 
 @SuppressWarnings("unused")
 public class produtos extends JDialog {
@@ -99,6 +103,8 @@ public class produtos extends JDialog {
 	private JList listPr;
 	private JButton btnCarregar;
 	private JPanel panel;
+	private JLabel lblNewLabel_15;
+	private JLabel lblData;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -116,16 +122,29 @@ public class produtos extends JDialog {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public produtos() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(produtos.class.getResource("/img/pngegg.png")));
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				setarData();
+			}
+			private void setarData() {
+				Date data = new Date();
+				DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+				lblData.setText(formatador.format(data));
+			}
+			
+		});
+		setIconImage(Toolkit.getDefaultToolkit().getImage(produtos.class.getResource("/img2/logo copiar.png")));
 		getContentPane().setBackground(SystemColor.scrollbar);
 		setTitle("Produtos");
 		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
 
 		scrollPanePr = new JScrollPane();
 		scrollPanePr.setVisible(false);
 		scrollPanePr.setBorder(null);
-		scrollPanePr.setBounds(69, 128, 188, 60);
+		scrollPanePr.setBounds(104, 201, 188, 60);
 		getContentPane().add(scrollPanePr);
 
 		listPr = new JList();
@@ -138,7 +157,8 @@ public class produtos extends JDialog {
 		scrollPanePr.setViewportView(listPr);
 
 		panelFor = new JPanel();
-		panelFor.setBackground(SystemColor.scrollbar);
+		panelFor.setForeground(new Color(255, 255, 255));
+		panelFor.setBackground(new Color(255, 255, 255));
 		panelFor.setBorder(
 				new TitledBorder(new TitledBorder(
 						new TitledBorder(
@@ -147,7 +167,7 @@ public class produtos extends JDialog {
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)), "Fornecedor",
 						TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelFor.setBounds(323, 0, 307, 84);
+		panelFor.setBounds(355, 26, 333, 84);
 		getContentPane().add(panelFor);
 		panelFor.setLayout(null);
 
@@ -189,27 +209,19 @@ public class produtos extends JDialog {
 		scrollPaneFor.setViewportView(listFor);
 
 		lblFoto = new JLabel("");
-		lblFoto.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		lblFoto.setIcon(new ImageIcon(produtos.class.getResource("/img/camera.png")));
-		lblFoto.setBounds(414, 106, 256, 256);
+		lblFoto.setBorder(null);
+		lblFoto.setIcon(new ImageIcon(produtos.class.getResource("/img2/camera.png")));
+		lblFoto.setBounds(475, 130, 256, 257);
 		getContentPane().add(lblFoto);
 
-		btnCarregar = new JButton("Carregar Foto");
-		btnCarregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				carregarFoto();
-			}
-		});
-		btnCarregar.setForeground(SystemColor.textHighlight);
-		btnCarregar.setBounds(478, 374, 142, 23);
-		getContentPane().add(btnCarregar);
-
 		JLabel lblNewLabel = new JLabel("Código do produto");
-		lblNewLabel.setBounds(10, 14, 116, 14);
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Dubai Medium", Font.PLAIN, 15));
+		lblNewLabel.setBounds(104, 38, 143, 14);
 		getContentPane().add(lblNewLabel);
 
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(120, 11, 56, 20);
+		txtCodigo.setBounds(104, 59, 46, 20);
 		getContentPane().add(txtCodigo);
 		txtCodigo.setColumns(10);
 
@@ -231,32 +243,38 @@ public class produtos extends JDialog {
 				}
 			}
 		});
-		txtBarcode.setBounds(68, 61, 143, 23);
+		txtBarcode.setBounds(104, 130, 143, 23);
 		getContentPane().add(txtBarcode);
 		txtBarcode.setColumns(10);
 		txtBarcode.setDocument(new Validador(13));
 
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(produtos.class.getResource("/img/barcode.png")));
-		lblNewLabel_1.setBounds(10, 50, 50, 45);
+		lblNewLabel_1.setBounds(104, 85, 56, 45);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Lote");
-		lblNewLabel_2.setBounds(15, 143, 58, 14);
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_2.setBounds(104, 350, 80, 14);
 		getContentPane().add(lblNewLabel_2);
 
 		txtLote = new JTextField();
-		txtLote.setBounds(69, 140, 142, 14);
+		txtLote.setBounds(104, 364, 101, 23);
 		getContentPane().add(txtLote);
 		txtLote.setColumns(10);
 		txtLote.setDocument(new Validador(50));
 
 		JLabel lblNewLabel_3 = new JLabel("Estoque");
-		lblNewLabel_3.setBounds(10, 267, 46, 14);
+		lblNewLabel_3.setForeground(new Color(255, 255, 255));
+		lblNewLabel_3.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_3.setBounds(104, 299, 116, 23);
 		getContentPane().add(lblNewLabel_3);
 
 		JLabel lblNewLabel_4 = new JLabel("Estoque Minimo");
-		lblNewLabel_4.setBounds(302, 190, 86, 14);
+		lblNewLabel_4.setForeground(new Color(255, 255, 255));
+		lblNewLabel_4.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_4.setBounds(354, 164, 136, 13);
 		getContentPane().add(lblNewLabel_4);
 
 		txtEstoque = new JTextField();
@@ -269,7 +287,7 @@ public class produtos extends JDialog {
 				}
 			}
 		});
-		txtEstoque.setBounds(78, 264, 86, 20);
+		txtEstoque.setBounds(104, 319, 188, 23);
 		getContentPane().add(txtEstoque);
 		txtEstoque.setColumns(10);
 		txtEstoque.setDocument(new Validador(15));
@@ -284,7 +302,7 @@ public class produtos extends JDialog {
 				}
 			}
 		});
-		txtEstoquemin.setBounds(302, 215, 86, 20);
+		txtEstoquemin.setBounds(354, 179, 111, 23);
 		getContentPane().add(txtEstoquemin);
 		txtEstoquemin.setColumns(10);
 		txtEstoquemin.setDocument(new Validador(15));
@@ -299,21 +317,27 @@ public class produtos extends JDialog {
 				}
 			}
 		});
-		txtCusto.setBounds(60, 326, 86, 20);
+		txtCusto.setBounds(354, 257, 116, 20);
 		getContentPane().add(txtCusto);
 		txtCusto.setColumns(10);
 
 		JLabel lblNewLabel_5 = new JLabel("Custo");
-		lblNewLabel_5.setBounds(14, 329, 46, 14);
+		lblNewLabel_5.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_5.setForeground(new Color(255, 255, 255));
+		lblNewLabel_5.setBounds(354, 240, 89, 20);
 		getContentPane().add(lblNewLabel_5);
 
 		cboUN = new JComboBox();
+		cboUN.setBorder(null);
+		cboUN.setBackground(new Color(255, 255, 255));
 		cboUN.setModel(new DefaultComboBoxModel(new String[] { "UN", "CX", "PC", "KG", "M" }));
-		cboUN.setBounds(312, 246, 56, 22);
+		cboUN.setBounds(354, 213, 56, 22);
 		getContentPane().add(cboUN);
 
 		JLabel lblNewLabel_6 = new JLabel("Local de armazenagem");
-		lblNewLabel_6.setBounds(10, 298, 136, 14);
+		lblNewLabel_6.setForeground(new Color(255, 255, 255));
+		lblNewLabel_6.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_6.setBounds(354, 389, 173, 14);
 		getContentPane().add(lblNewLabel_6);
 
 		btnLimpar = new JButton("");
@@ -326,8 +350,8 @@ public class produtos extends JDialog {
 		btnLimpar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLimpar.setContentAreaFilled(false);
 		btnLimpar.setBorder(null);
-		btnLimpar.setIcon(new ImageIcon(produtos.class.getResource("/img/pngegg (3).png")));
-		btnLimpar.setBounds(10, 399, 89, 60);
+		btnLimpar.setIcon(new ImageIcon(produtos.class.getResource("/img2/pngegg (3).png")));
+		btnLimpar.setBounds(203, 456, 89, 60);
 		getContentPane().add(btnLimpar);
 
 		btnEditar = new JButton("");
@@ -341,9 +365,8 @@ public class produtos extends JDialog {
 		btnEditar.setContentAreaFilled(false);
 		btnEditar.setBorder(null);
 		btnEditar.setToolTipText("Editar Produto");
-		btnEditar.setIcon(new ImageIcon(
-				produtos.class.getResource("/img/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
-		btnEditar.setBounds(110, 399, 89, 60);
+		btnEditar.setIcon(new ImageIcon(produtos.class.getResource("/img/pencileditblackcircularbuttoninterfacesymbol_104762 (4).png")));
+		btnEditar.setBounds(286, 456, 89, 60);
 		getContentPane().add(btnEditar);
 
 		btnAdicionar = new JButton("");
@@ -358,7 +381,7 @@ public class produtos extends JDialog {
 		btnAdicionar.setContentAreaFilled(false);
 		btnAdicionar.setBorder(null);
 		btnAdicionar.setIcon(new ImageIcon(produtos.class.getResource("/img/addblackcircularbutton_104741 (1).png")));
-		btnAdicionar.setBounds(203, 399, 89, 60);
+		btnAdicionar.setBounds(379, 456, 89, 60);
 		getContentPane().add(btnAdicionar);
 
 		btnExcluir = new JButton("");
@@ -373,11 +396,13 @@ public class produtos extends JDialog {
 		btnExcluir.setContentAreaFilled(false);
 		btnExcluir.setBorder(null);
 		btnExcluir.setIcon(new ImageIcon(produtos.class.getResource("/img/crossdeleteblackcircularbutton_79721.png")));
-		btnExcluir.setBounds(302, 399, 89, 60);
+		btnExcluir.setBounds(478, 456, 89, 60);
 		getContentPane().add(btnExcluir);
 
 		JLabel lblNewLabel_7 = new JLabel("Produto");
-		lblNewLabel_7.setBounds(10, 106, 65, 26);
+		lblNewLabel_7.setForeground(new Color(255, 255, 255));
+		lblNewLabel_7.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_7.setBounds(104, 164, 65, 26);
 		getContentPane().add(lblNewLabel_7);
 
 		txtNome = new JTextField();
@@ -387,26 +412,30 @@ public class produtos extends JDialog {
 				listarProdutos();
 			}
 		});
-		txtNome.setBounds(69, 109, 188, 20);
+		txtNome.setBounds(104, 182, 188, 20);
 		getContentPane().add(txtNome);
 		txtNome.setColumns(10);
 		txtNome.setDocument(new Validador(30));
 
 		JLabel lblNewLabel_8 = new JLabel("Descrição");
-		lblNewLabel_8.setBounds(10, 190, 65, 14);
+		lblNewLabel_8.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_8.setForeground(new Color(255, 255, 255));
+		lblNewLabel_8.setBounds(104, 230, 105, 14);
 		getContentPane().add(lblNewLabel_8);
 
 		txtDescricao = new JTextArea();
-		txtDescricao.setBounds(71, 168, 188, 48);
+		txtDescricao.setBounds(106, 248, 188, 52);
 		getContentPane().add(txtDescricao);
 
 		txtFabricante = new JTextField();
-		txtFabricante.setBounds(71, 227, 171, 20);
+		txtFabricante.setBounds(104, 405, 188, 23);
 		getContentPane().add(txtFabricante);
 		txtFabricante.setColumns(10);
 
 		JLabel lblNewLabel_9 = new JLabel("Fabricante");
-		lblNewLabel_9.setBounds(10, 230, 65, 14);
+		lblNewLabel_9.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_9.setForeground(new Color(255, 255, 255));
+		lblNewLabel_9.setBounds(104, 391, 101, 19);
 		getContentPane().add(lblNewLabel_9);
 
 		txtLucro = new JTextField();
@@ -420,54 +449,89 @@ public class produtos extends JDialog {
 			}
 		});
 		txtLucro.setText("0");
-		txtLucro.setBounds(203, 326, 65, 20);
+		txtLucro.setBounds(354, 358, 65, 20);
 		getContentPane().add(txtLucro);
 		txtLucro.setColumns(10);
 
 		JLabel lblNewLabel_11 = new JLabel("Lucro");
-		lblNewLabel_11.setBounds(165, 329, 46, 14);
+		lblNewLabel_11.setForeground(new Color(255, 255, 255));
+		lblNewLabel_11.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_11.setBounds(354, 337, 111, 14);
 		getContentPane().add(lblNewLabel_11);
 
 		JLabel lblNewLabel_12 = new JLabel("%");
-		lblNewLabel_12.setBounds(271, 329, 37, 14);
+		lblNewLabel_12.setForeground(new Color(255, 255, 255));
+		lblNewLabel_12.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_12.setBounds(420, 361, 46, 14);
 		getContentPane().add(lblNewLabel_12);
 
 		JLabel lblNewLabel_13 = new JLabel("Validade");
-		lblNewLabel_13.setBounds(10, 361, 63, 14);
+		lblNewLabel_13.setForeground(new Color(255, 255, 255));
+		lblNewLabel_13.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_13.setBounds(354, 288, 116, 14);
 		getContentPane().add(lblNewLabel_13);
 
 		JLabel lblNewLabel_14 = new JLabel("Entrada");
-		lblNewLabel_14.setBounds(323, 126, 46, 14);
+		lblNewLabel_14.setForeground(new Color(255, 255, 255));
+		lblNewLabel_14.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblNewLabel_14.setBounds(354, 116, 89, 14);
 		getContentPane().add(lblNewLabel_14);
 
 		txtLocal = new JTextField();
-		txtLocal.setBounds(136, 295, 137, 20);
+		txtLocal.setBounds(354, 405, 137, 23);
 		getContentPane().add(txtLocal);
 		txtLocal.setColumns(10);
 		txtLocal.setDocument(new Validador(30));
 
 		dateEntrada = new JDateChooser();
-		dateEntrada.setBounds(296, 143, 108, 20);
+		dateEntrada.setBackground(new Color(255, 255, 255));
+		dateEntrada.setBounds(354, 130, 108, 23);
 		getContentPane().add(dateEntrada);
 		dateEntrada.setEnabled(false);
 
 		dateValidade = new JDateChooser();
-		dateValidade.setBounds(60, 357, 108, 20);
+		dateValidade.setBounds(354, 306, 111, 20);
 		getContentPane().add(dateValidade);
 
 		btnPesquisarProduto = new JButton("Pesquisar");
+		btnPesquisarProduto.setBackground(new Color(255, 255, 255));
+		btnPesquisarProduto.setFont(new Font("Dubai Medium", Font.BOLD, 15));
 		btnPesquisarProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarProduto();
 			}
 
 		});
-		btnPesquisarProduto.setBounds(186, 10, 116, 23);
+		btnPesquisarProduto.setBounds(515, 130, 173, 23);
 		getContentPane().add(btnPesquisarProduto);
 		
 		panel = new JPanel();
-		panel.setBounds(0, 495, 784, 66);
+		panel.setBounds(0, 527, 784, 34);
 		getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		lblData = new JLabel("");
+		lblData.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblData.setBounds(262, 0, 397, 34);
+		panel.add(lblData);
+		
+				btnCarregar = new JButton("Carregar Foto");
+				btnCarregar.setBackground(new Color(255, 255, 255));
+				btnCarregar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				btnCarregar.setBounds(515, 364, 173, 23);
+				getContentPane().add(btnCarregar);
+				btnCarregar.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+				btnCarregar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						carregarFoto();
+					}
+				});
+				btnCarregar.setForeground(new Color(0, 0, 0));
+				
+				lblNewLabel_15 = new JLabel("");
+				lblNewLabel_15.setIcon(new ImageIcon(produtos.class.getResource("/img2/inicio2.png")));
+				lblNewLabel_15.setBounds(0, 0, 784, 561);
+				getContentPane().add(lblNewLabel_15);
 
 	}
 

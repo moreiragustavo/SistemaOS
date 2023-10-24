@@ -26,6 +26,11 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.UIManager;
 
 public class login extends JFrame {
 
@@ -47,6 +52,7 @@ public class login extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_5;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,6 +68,7 @@ public class login extends JFrame {
 	}
 
 	public login() {
+		setResizable(false);
 		setBackground(new Color(0, 0, 0));
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -76,88 +83,104 @@ public class login extends JFrame {
 
 			}
 		});
-		setIconImage(Toolkit.getDefaultToolkit().getImage(login.class.getResource("/img/pngegg.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(login.class.getResource("/img2/logodaempresa.png")));
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(192, 192, 192));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton btnAcessar = new JButton("Acessar");
-		btnAcessar.setBackground(new Color(255, 255, 255));
-		btnAcessar.setFont(new Font("Dubai Medium", Font.PLAIN, 11));
-		btnAcessar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Logar();
-			}
-		});
-		btnAcessar.setBounds(320, 414, 129, 46);
-		contentPane.add(btnAcessar);
-
 		txtLogin = new JTextField();
 		txtLogin.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		txtLogin.setBounds(239, 204, 293, 54);
+		txtLogin.setBounds(239, 204, 293, 46);
 		contentPane.add(txtLogin);
 		txtLogin.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("Senha");
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setBackground(new Color(255, 255, 255));
 		lblNewLabel_1.setFont(new Font("Dubai Medium", Font.BOLD, 20));
 		lblNewLabel_1.setBounds(354, 281, 178, 20);
 		contentPane.add(lblNewLabel_1);
 
 		txtSenha = new JPasswordField();
+		txtSenha.setBorder(UIManager.getBorder("ComboBox.border"));
 		txtSenha.setBounds(239, 312, 293, 46);
 		contentPane.add(txtSenha);
 
 		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 515, 784, 46);
+		panel.setBounds(0, 507, 784, 54);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		lblData = new JLabel("New label");
-		lblData.setBounds(257, 11, 505, 24);
+		lblData = new JLabel("");
+		lblData.setBounds(262, 11, 505, 32);
 		panel.add(lblData);
-		lblData.setFont(new Font("Dubai Light", Font.BOLD, 15));
+		lblData.setFont(new Font("Dubai Medium", Font.BOLD, 15));
 		lblData.setForeground(new Color(0, 0, 0));
 		lblData.setBackground(new Color(0, 0, 0));
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(673, 445, 81, 59);
-		contentPane.add(panel_1);
-
-		lblStatus = new JButton("");
-		panel_1.add(lblStatus);
-		lblStatus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				status();
-			}
-		});
-		lblStatus.setIcon(new ImageIcon(login.class.getResource("/img/dbon.png")));
-		lblStatus.setBorder(null);
-		lblStatus.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblStatus.setContentAreaFilled(false);
-		lblStatus.setToolTipText("Status");
+		
+				lblStatus = new JButton("");
+				lblStatus.setBounds(725, 0, 49, 54);
+				panel.add(lblStatus);
+				lblStatus.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						status();
+					}
+				});
+				lblStatus.setIcon(new ImageIcon(login.class.getResource("/img/dbon.png")));
+				lblStatus.setBorder(null);
+				lblStatus.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				lblStatus.setContentAreaFilled(false);
+				lblStatus.setToolTipText("Status");
 
 		lblNewLabel_2 = new JLabel("Login");
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Dubai Medium", Font.BOLD, 20));
 		lblNewLabel_2.setBounds(354, 173, 178, 20);
 		contentPane.add(lblNewLabel_2);
 
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(login.class.getResource("/img/pngwing.com (1).png")));
-		lblNewLabel.setBounds(354, 35, 196, 83);
+		lblNewLabel.setIcon(new ImageIcon(login.class.getResource("/img2/logodaempresa.png")));
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+			
+		});
+		lblNewLabel.setBounds(314, 17, 153, 129);
 		contentPane.add(lblNewLabel);
 
-		lblNewLabel_3 = new JLabel("Mecânica Carmech");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel_3.setBounds(309, 132, 162, 14);
+		lblNewLabel_3 = new JLabel("Mecânica AutoStar");
+		lblNewLabel_3.setForeground(new Color(255, 255, 255));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel_3.setBounds(291, 132, 196, 14);
 		contentPane.add(lblNewLabel_3);
+				
+				lblNewLabel_5 = new JLabel("");
+				lblNewLabel_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				lblNewLabel_5.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						System.out.println("inicio");
+						Logar();
+					}
+				});
+				lblNewLabel_5.setIcon(new ImageIcon(login.class.getResource("/img2/btnacessar2.png")));
+				lblNewLabel_5.setBounds(327, 406, 160, 36);
+				contentPane.add(lblNewLabel_5);
+				
+				JLabel lblNewLabel_4 = new JLabel("");
+				lblNewLabel_4.setIcon(new ImageIcon(login.class.getResource("/img2/inicio.jpg")));
+				lblNewLabel_4.setBounds(0, 0, 784, 561);
+				contentPane.add(lblNewLabel_4);
 
 	}
 
@@ -190,7 +213,7 @@ public class login extends JFrame {
 						principal.btnRelatorios.setEnabled(true);
 						principal.btnUsuarios.setEnabled(true);
 
-						principal.panelRodape.setBackground(Color.pink);
+						principal.panelRodape.setBackground(Color.lightGray);
 					} else {
 						principal.setVisible(true);
 						principal.lblUsuario.setText(rs.getString(2));

@@ -29,6 +29,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import model.DAO;
 import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 @SuppressWarnings("unused")
 public class relatorios extends JDialog {
@@ -41,6 +44,10 @@ public class relatorios extends JDialog {
 	private JButton btnServicos;
 	private JButton btnFornecedores;
 	private JButton btnClientes;
+	private JPanel panel;
+	private JLabel lblData;
+	private JPanel panel_1;
+	private JButton btnPatrimnio;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -57,15 +64,28 @@ public class relatorios extends JDialog {
 	}
 
 	public relatorios() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				setarData();
+			}
+			private void setarData() {
+				Date data = new Date();
+				DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+				lblData.setText(formatador.format(data));
+			}
+			
+		});
 		setBackground(new Color(255, 255, 255));
 		getContentPane().setBackground(new Color(192, 192, 192));
 		getContentPane().setForeground(new Color(0, 0, 0));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(relatorios.class.getResource("/img/pngegg (5).png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(relatorios.class.getResource("/img2/logo copiar.png")));
 		setTitle("Relatórios");
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
 
 		btnServicos = new JButton("");
 		btnServicos.setIcon(new ImageIcon(relatorios.class.getResource("/img/pngegg (5).png")));
@@ -79,11 +99,11 @@ public class relatorios extends JDialog {
 		btnServicos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnServicos.setBorder(null);
 		btnServicos.setToolTipText("Serviços");
-		btnServicos.setBounds(411, 103, 119, 103);
+		btnServicos.setBounds(414, 131, 136, 95);
 		getContentPane().add(btnServicos);
 
 		btnClientes = new JButton("");
-		btnClientes.setIcon(new ImageIcon(relatorios.class.getResource("/img/pngegg (1).png")));
+		btnClientes.setIcon(new ImageIcon(relatorios.class.getResource("/img2/sss.png")));
 		btnClientes.setContentAreaFilled(false);
 		btnClientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnClientes.setBorder(null);
@@ -93,18 +113,18 @@ public class relatorios extends JDialog {
 				relatorioClientes();
 			}
 		});
-		btnClientes.setBounds(182, 118, 112, 88);
+		btnClientes.setBounds(202, 131, 147, 94);
 		getContentPane().add(btnClientes);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 503, 784, 58);
+		panel = new JPanel();
+		panel.setBounds(0, 527, 784, 34);
 		getContentPane().add(panel);
 		panel.setLayout(null);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(0, 0, 784, 58);
-		getContentPane().add(panel_1);
+		
+		lblData = new JLabel("");
+		lblData.setFont(new Font("Dubai Medium", Font.BOLD, 15));
+		lblData.setBounds(262, 0, 397, 34);
+		panel.add(lblData);
 
 		btnFornecedores = new JButton("Fornecedores");
 		btnFornecedores.addActionListener(new ActionListener() {
@@ -116,21 +136,70 @@ public class relatorios extends JDialog {
 		btnFornecedores.setToolTipText("Fornecedores");
 		btnFornecedores.setContentAreaFilled(false);
 		btnFornecedores.setBorder(null);
-		btnFornecedores.setBounds(411, 303, 119, 103);
+		btnFornecedores.setBounds(414, 263, 136, 103);
 		getContentPane().add(btnFornecedores);
 
-		JButton btnPatrimnio = new JButton("");
+		btnPatrimnio = new JButton("");
 		btnPatrimnio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				relatorioPatrimonio();
 			}
 		});
-		btnPatrimnio.setIcon(new ImageIcon(relatorios.class.getResource("/img/patr.png")));
+		btnPatrimnio.setIcon(new ImageIcon(relatorios.class.getResource("/img2/patr.png")));
 		btnPatrimnio.setToolTipText("Patrimônio");
 		btnPatrimnio.setContentAreaFilled(false);
 		btnPatrimnio.setBorder(null);
-		btnPatrimnio.setBounds(171, 303, 119, 103);
+		btnPatrimnio.setBounds(202, 263, 147, 103);
 		getContentPane().add(btnPatrimnio);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBounds(190, 226, 171, 27);
+		getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Clientes");
+		lblNewLabel_1.setFont(new Font("Dubai Medium", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(47, 0, 97, 27);
+		panel_1.add(lblNewLabel_1);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setLayout(null);
+		panel_1_1.setBackground(Color.WHITE);
+		panel_1_1.setBounds(388, 226, 187, 27);
+		getContentPane().add(panel_1_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Serviços");
+		lblNewLabel_1_1.setFont(new Font("Dubai Medium", Font.BOLD, 20));
+		lblNewLabel_1_1.setBounds(59, 0, 90, 27);
+		panel_1_1.add(lblNewLabel_1_1);
+		
+		JPanel panel_1_2 = new JPanel();
+		panel_1_2.setLayout(null);
+		panel_1_2.setBackground(Color.WHITE);
+		panel_1_2.setBounds(190, 366, 171, 27);
+		getContentPane().add(panel_1_2);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("Patrimônio");
+		lblNewLabel_1_1_1.setFont(new Font("Dubai Medium", Font.BOLD, 20));
+		lblNewLabel_1_1_1.setBounds(35, 0, 105, 27);
+		panel_1_2.add(lblNewLabel_1_1_1);
+		
+		JPanel panel_1_3 = new JPanel();
+		panel_1_3.setLayout(null);
+		panel_1_3.setBackground(Color.WHITE);
+		panel_1_3.setBounds(388, 366, 187, 27);
+		getContentPane().add(panel_1_3);
+		
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("Fornecedores");
+		lblNewLabel_1_1_1_1.setFont(new Font("Dubai Medium", Font.BOLD, 20));
+		lblNewLabel_1_1_1_1.setBounds(30, 0, 157, 27);
+		panel_1_3.add(lblNewLabel_1_1_1_1);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(relatorios.class.getResource("/img2/inicio2.png")));
+		lblNewLabel.setBounds(0, 0, 784, 550);
+		getContentPane().add(lblNewLabel);
 	}
 
 	private void relatorioClientes() {
