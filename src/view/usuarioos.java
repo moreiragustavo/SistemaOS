@@ -370,6 +370,38 @@ public class usuarioos extends JDialog {
 			System.out.println(e);
 		}
 	}
+	private void BuscarUsuarioLista() {
+		int linha = listaUsuario.getSelectedIndex();
+		if (linha >= 0) {
+			String readlistaUsuario = "select * from usuarios where nome like '" + textNome.getText() + "%'"
+					+ "order by nome limit " + (linha) + ", 1";
+			try {
+				con = dao.conectar();
+				pst = con.prepareStatement(readlistaUsuario);
+				rs = pst.executeQuery();
+				if (rs.next()) {
+					scrollPaneUsuarios.setVisible(false);
+					textID.setText(rs.getString(1));
+					textNome.setText(rs.getString(2));
+					textLogin.setText(rs.getString(3));
+					textSenha.setText(rs.getString(4));
+					Combo.setSelectedItem(rs.getString(5));
+					btnEditar.setEnabled(true);
+					btnExcluir.setEnabled(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuário Inexistente");
+				}
+				con.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+		} else {
+			scrollPaneUsuarios.setVisible(false);
+
+		}
+
+	}
 
 	private void LimparCampos() {
 		textID.setText(null);
@@ -382,7 +414,6 @@ public class usuarioos extends JDialog {
 		btnAdicionar.setEnabled(false);
 		scrollPaneUsuarios.setVisible(false);
 		Combo.setSelectedItem("");
-		textSenha.setBackground(getForeground());
 		chckSenha.setSelected(false);
 
 	}
@@ -520,34 +551,5 @@ public class usuarioos extends JDialog {
 
 	}
 
-	private void BuscarUsuarioLista() {
-		int linha = listaUsuario.getSelectedIndex();
-		if (linha > 0) {
-			String readlistaUsuario = "select * from usuarios where nome like '" + textNome.getText() + "%'"
-					+ "order by nome limit " + (linha) + ", 1";
-			try {
-				con = dao.conectar();
-				pst = con.prepareStatement(readlistaUsuario);
-				rs = pst.executeQuery();
-				if (rs.next()) {
-					scrollPaneUsuarios.setVisible(false);
-					textID.setText(rs.getString(1));
-					textNome.setText(rs.getString(2));
-					textLogin.setText(rs.getString(3));
-					textSenha.setText(rs.getString(4));
-					Combo.setSelectedItem(rs.getString(5));
-				} else {
-					JOptionPane.showMessageDialog(null, "Usuário Inexistente");
-				}
-				con.close();
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-
-		} else {
-			scrollPaneUsuarios.setVisible(false);
-
-		}
-
-	}
+	
 }

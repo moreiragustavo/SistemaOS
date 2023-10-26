@@ -537,16 +537,14 @@ public class fornecedores extends JDialog {
 				pst.setString(14, txtCidade.getText());
 				pst.setString(15, cboUF_1.getSelectedItem().toString());
 				pst.setString(16, txtID.getText());
-
 				pst.executeUpdate();
-
+				limparCampos();
 				JOptionPane.showMessageDialog(null, "Dados do fornecedor editados com sucesso");
 			} catch (java.sql.SQLIntegrityConstraintViolationException e) {
 				JOptionPane.showMessageDialog(null, "CNPJ Existente");
 				txtCNPJ.setText(null);
 				txtCNPJ.requestFocus();
 			} catch (Exception e1) {
-
 				System.out.println(e1);
 
 			}

@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -12,6 +13,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -39,7 +42,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
@@ -49,11 +51,6 @@ import com.toedter.calendar.JDateChooser;
 
 import model.DAO;
 import utils.Validador;
-import java.awt.ScrollPane;
-import java.awt.List;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.Font;
 
 @SuppressWarnings("unused")
 public class produtos extends JDialog {
@@ -355,7 +352,6 @@ public class produtos extends JDialog {
 		getContentPane().add(btnLimpar);
 
 		btnEditar = new JButton("");
-		btnEditar.setEnabled(false);
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				editar();
@@ -370,7 +366,6 @@ public class produtos extends JDialog {
 		getContentPane().add(btnEditar);
 
 		btnAdicionar = new JButton("");
-		btnAdicionar.setEnabled(false);
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				adicionar();
@@ -385,7 +380,6 @@ public class produtos extends JDialog {
 		getContentPane().add(btnAdicionar);
 
 		btnExcluir = new JButton("");
-		btnExcluir.setEnabled(false);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				excluir();
@@ -518,7 +512,7 @@ public class produtos extends JDialog {
 				btnCarregar = new JButton("Carregar Foto");
 				btnCarregar.setBackground(new Color(255, 255, 255));
 				btnCarregar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				btnCarregar.setBounds(515, 364, 173, 23);
+				btnCarregar.setBounds(515, 405, 173, 23);
 				getContentPane().add(btnCarregar);
 				btnCarregar.setFont(new Font("Dubai Medium", Font.BOLD, 15));
 				btnCarregar.addActionListener(new ActionListener() {
@@ -561,7 +555,7 @@ public class produtos extends JDialog {
 	private void buscarProdutoLista() {
 		int linha = listPr.getSelectedIndex();
 		if (linha >= 0) {
-			String readListaCli = "select * from produtos where produto like '" + txtNome.getText() + "%'"
+			String readListaCli = "select * from produtos inner join fornecedores on produtos.idfor = fornecedores.idfor where produto like '" + txtNome.getText() + "%'"
 					+ "order by produto limit " + (linha) + " , 1";
 			try {
 				con = dao.conectar();
@@ -577,6 +571,17 @@ public class produtos extends JDialog {
 					Blob blob = (Blob) rs.getBlob(6);
 					byte[] img = blob.getBytes(1, (int) blob.length());
 					BufferedImage imagem = null;
+					txtFabricante.setText(rs.getString(7));
+					dateEntrada.setDate(rs.getDate(8));
+					dateValidade.setDate(rs.getDate(9));
+					txtEstoque.setText(rs.getString(10));
+					txtEstoquemin.setText(rs.getString(11));
+					cboUN.setSelectedItem(rs.getString(4));
+					txtLocal.setText(rs.getString(13));
+					txtCusto.setText(rs.getString(14));
+					txtLucro.setText(rs.getString(15));
+					txtIdfor.setText(rs.getString(16));
+					txtFornecedor.setText(rs.getString(18));
 					try {
 						imagem = ImageIO.read(new ByteArrayInputStream(img));
 					} catch (Exception e) {
@@ -665,7 +670,7 @@ public class produtos extends JDialog {
 					btnEditar.setEnabled(true);
 					btnAdicionar.setEnabled(false);
 				} else {
-					btnEditar.setEnabled(false);
+					btnEditar.setEnabled(true);
 					btnAdicionar.setEnabled(true);
 				}
 			} catch (Exception e) {
@@ -773,10 +778,12 @@ public class produtos extends JDialog {
 					txtCusto.setText(rs.getString(14));
 					txtLucro.setText(rs.getString(15));
 					txtIdfor.setText(rs.getString(16));
+					txtFornecedor.setText(rs.getString(18));
 					produtoCadastrado = true;
 					btnPesquisarProduto.setEnabled(false);
 					btnCarregar.setEnabled(true);
 					btnExcluir.setEnabled(true);
+					btnEditar.setEnabled(true);
 					dateValidade.setEnabled(false);
 					panelFor.setEnabled(false);
 					txtFornecedor.setEnabled(false);
@@ -838,10 +845,12 @@ public class produtos extends JDialog {
 					txtCusto.setText(rs.getString(14));
 					txtLucro.setText(rs.getString(15));
 					txtIdfor.setText(rs.getString(16));
+					txtFornecedor.setText(rs.getString(18));;
 					produtoCadastrado = true;
 					btnPesquisarProduto.setEnabled(false);
 					btnCarregar.setEnabled(true);
 					btnExcluir.setEnabled(true);
+					btnEditar.setEnabled(true);
 					dateValidade.setEnabled(false);
 					panelFor.setEnabled(false);
 					txtFornecedor.setEnabled(false);

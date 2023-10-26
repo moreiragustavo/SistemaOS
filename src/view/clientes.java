@@ -153,6 +153,17 @@ public class clientes extends JDialog {
 		txtNome.setDocument(new Validador(30));
 
 		txtCep = new JTextField();
+		txtCep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String caracteres = "0123456789.";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+
+					e.consume();
+				}
+			}
+		});
 		txtCep.setBounds(106, 316, 240, 20);
 		getContentPane().add(txtCep);
 		txtCep.setColumns(10);
@@ -314,6 +325,18 @@ public class clientes extends JDialog {
 		getContentPane().add(lblNewLabel_7);
 
 		txtNumero = new JTextField();
+		txtNumero.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				String caracteres = "0123456789.";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+
+					e.consume();
+				}
+			}
+			
+		});
 		txtNumero.setBounds(440, 263, 46, 20);
 		getContentPane().add(txtNumero);
 		txtNumero.setColumns(10);
@@ -338,7 +361,7 @@ public class clientes extends JDialog {
 
 		cboUf = new JComboBox();
 		cboUf.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		cboUf.setForeground(new Color(255, 255, 255));
+		cboUf.setForeground(new Color(0, 0, 0));
 		cboUf.setBounds(440, 211, 46, 22);
 		cboUf.setModel(new DefaultComboBoxModel(
 				new String[] { "", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
@@ -510,10 +533,6 @@ public class clientes extends JDialog {
 		} else if (txtNumero.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Insira o Numero do Cliente");
 			txtNumero.requestFocus();
-
-		} else if (txtComplemento.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Insira o Complemento Cliente");
-			txtComplemento.requestFocus();
 		} else if (txtBairro.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Insira o Bairro do Cliente");
 			txtBairro.requestFocus();

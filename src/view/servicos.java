@@ -385,7 +385,7 @@ public class servicos extends JDialog {
 	private void buscar() {
 		String numOS = JOptionPane.showInputDialog("Número da OS");
 
-		String read = "select * from servicos where os=?";
+		String read = "select * from servicos inner join clientes on servicos.idcli = clientes.idcli where os=?";
 		try {
 			con = dao.conectar();
 
@@ -400,6 +400,7 @@ public class servicos extends JDialog {
 				txtProblema.setText(rs.getString(4));
 				txtValor.setText(rs.getString(5));
 				txtID.setText(rs.getString(6));
+				txtCliente.setText(rs.getString(8));
 			} else {
 				JOptionPane.showMessageDialog(null, "Serviço Inexistente");
 			}
@@ -488,7 +489,7 @@ public class servicos extends JDialog {
 			JOptionPane.showMessageDialog(null, "Insira o Valor do Serviço");
 			txtValor.requestFocus();
 		} else {
-			String update = "update servicos set os=?,dataOS=?,veiculo=?,problema=?,valor=? where os=?";
+			String update = "update servicos set os=?,dataOS=?,equipamento=?,defeito=?,valor=? where idcli=?";
 			try {
 				con = dao.conectar();
 				pst = con.prepareStatement(update);
